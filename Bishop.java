@@ -1,7 +1,7 @@
 
-public class BishopPiece extends Piece{
+public class Bishop extends Piece{
 
-	public BishopPiece(boolean team) {
+	public Bishop(boolean team) {
 		super(team);
 	}
 	//Can move as many spaces as it wants diagonally.

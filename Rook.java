@@ -1,7 +1,7 @@
 
-public class RookPiece extends Piece{
+public class Rook extends Piece{
 
-	public RookPiece(boolean team) {
+	public Rook(boolean team) {
 		super(team);
 	}
 	//Can move as many spaces as it wants horizontally or vertically.

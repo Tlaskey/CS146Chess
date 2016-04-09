@@ -1,7 +1,7 @@
 
-public class KnightPiece extends Piece{
+public class Knight extends Piece{
 
-	public KnightPiece(boolean team) {
+	public Knight(boolean team) {
 		super(team);
 	}
 	//Can move in patterns of L shapes. 
