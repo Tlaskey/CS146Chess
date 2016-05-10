@@ -1,67 +1,174 @@
-import java.util.ArrayList;
+public class Piece {
+	protected boolean team;
+	protected String name;
+	protected boolean moved;
+	protected int row, column;
+	protected boolean direction;
+	protected boolean empty;
+	protected String[] interceptions;
+	protected String[] moves;
 
-public class Piece {	
-	private boolean team;
-	private int x;
-	private int y;
-	private final boolean isBlankSpace;	
-	public Piece(){ 
-		isBlankSpace = false;
-		team = false;
-		x = 0;
-		y = 0;
+	public Piece(boolean t, String n, boolean no, int x, int y, boolean d, boolean e) {
+		int total = 18;
+		interceptions = new String[total];
+		moves = new String[30];
+
+		for (int i = 0; i < moves.length; i++) {
+			moves[i] = null;
+		}
+
+		for (int i = 0; i < total; i++)// 18 because at any point in the game a
+										// total of 18 piece from both sides can
+		{ // be intercepting a spot or a piece on the board
+			interceptions[i] = null;
+		}
+		team = t;
+		name = n;
+		moved = no;
+		row = x;
+		column = y;
+		direction = d;
+		empty = e;
 	}
-	public Piece(boolean color, int y, int x)
-	{
-		isBlankSpace = false;
-		team = color;
-		this.x = x;
-		this.y = y;
+
+	// Another constructor for the blank
+	public Piece() {
+
 	}
-	public Piece(boolean color, int y, int x, boolean blank)
-	{
-		isBlankSpace = blank;
-		team = color;
-		this.x = x;
-		this.y = y;
+
+	// Setters
+	// Setting the move count
+	public void setMoveCount(int m) {
+		moves = new String[m];
 	}
-	public boolean isBlank(){
-		return isBlankSpace;
+
+	public void setOneMove(int i, String e) {
+		moves[i] = e;
 	}
-	public boolean getTeam()
-	{		
+
+	public void setRowColumn(int r, int c) {
+		row = r;
+		column = c;
+	}
+
+	public void hasMoved() {
+		// Set weather the has been moved already
+		moved = false;
+	}
+
+	// Getters
+	public boolean getTeam() {
 		return team;
 	}
-	public int getX()
-	{
-		return x;
+
+	public int getRow() {
+		return row;
 	}
-	public int getY()
-	{
-		return y;
+
+	public int getColumn() {
+		return column;
 	}
-	public void setLoc(int x, int y)
-	{
-		this.x = x;
-		this.y = y;
+
+	public String getName() {
+		return name;
 	}
-	public String getLoc()
-	{
-		return y + "," + x;
+
+	public boolean directionUp() {
+		return direction;
 	}
-	public void setX(int x)
-	{
-		this.x = x;
+
+	public boolean getIfMoved() {
+		return moved;
 	}
-	public void setY(int y)
-	{
-		this.y = y;
+
+	public boolean getIfEmpty() {
+		return empty;
 	}
-	public ArrayList<String> moves()
-	{
-		String temp = "0,0";
-		ArrayList<String> temp2 = new ArrayList<>();
-		temp2.add(temp);
-		return temp2;
+
+	// Movement
+	public void moves(Board b) {
+		// Fill each class's own move filling function
+	}
+
+	// Get the moves
+	public String[] getMove() {
+		return moves;
+	}
+
+	// Print the move list
+	public void printMoves() {
+		int i = 0;
+		while (moves[i] != null) {
+			System.out.println(moves[i]);
+			i++;
+		}
+	}
+
+	// Delete previous intersections
+	public void toDeleteIntersect() {
+		// Since the place of the piece is updated
+		// therefore the moveset has to be updated as well, and
+		// thus also the intersections' array
+		for (int i = 0; i < moves.length; i++) {
+			// First Delete the array
+			String m = moves[i];
+			deleteFromIntersect(row, column, m);
+		}
+
+	}
+
+	// Update the interception after making the move
+	public void deleteFromIntersect(int row, int col, String del) {
+		int m = 0;
+		while (m < interceptions.length) {
+			if (interceptions[m] == del)
+				interceptions[m] = null;
+			m++;
+		}
+
+	}
+
+	// Add to interceptions
+	// This checks an empty spot to put in the 'being intercepted "by"'
+	// string in the interceptions array
+	protected void addToInterceptions(String by, int r, int c, Board b) {
+		for (int i = 0; i < b.getPiece(r, c).interceptions.length; i++) {
+			if (b.getPiece(r, c).interceptions[i] == null) {
+				b.getPiece(r, c).interceptions[i] = by;
+				break;
+			}
+		}
+	}
+
+	// Check if the interceptions have an interception
+	// of the opposing team
+	public String[] checkIntercept(Board b, boolean t) {
+		// Catch all the opposting team intercept in an array
+		String[] catchP = new String[9];
+		int m = 0;
+		// intialize the catch array
+		for (int i = 0; i < 9; i++)
+			catchP[i] = null;
+
+		for (int i = 0; i < interceptions.length; i++) {
+			if (interceptions[i] != null) {
+				int r = Character.getNumericValue(interceptions[i].charAt(0));
+				int c = Character.getNumericValue(interceptions[i].charAt(1));
+
+				if (b.getPiece(r, c).getTeam() != t) {
+					System.out.println("The piece at " + b.getPiece(r, c).getName());
+					catchP[m] = interceptions[i];
+					m++;
+				}
+			}
+		}
+
+		return catchP;
+	}
+
+	// Clear all the old moves
+	public void clearMoves() {
+		for (int i = 0; i < moves.length; i++)
+			moves[i] = null;
 	}
 }

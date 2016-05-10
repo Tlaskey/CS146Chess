@@ -1,80 +1,98 @@
-import java.util.ArrayList;
-
 public class Pawn extends Piece {
-	boolean firstMove;
+	private int limit;
 
-	public Pawn(boolean b, int i, int j) {
-		super(b, i, j);
-		firstMove = true;
+	public Pawn(boolean t, String n, boolean m, int x, int y, boolean d, boolean e) {
+		super(t, n, m, x, y, d, e);
+		limit = 4;
 	}
 
-	@Override
-	public String toString() {
-		if (getTeam()) {
-			return "P";
+	// move
+	public void moves(Board b) {
+		int r = row;
+		int c = column;
+
+		String m;
+		int up = 1;
+		int up2 = 2;
+		int down = -1;
+		int down2 = -2;
+		int c1 = 0;
+		int c2 = 0;
+		if (direction) {
+			c1 = up;
+			c2 = up2;
+		} else {
+			c1 = down;
+			c2 = down2;
 		}
-		return "p";
+
+		int i = 0;
+		// Two different options for the pawn
+		if (row == 0 || row == 7) {
+			// call the promotion function
+		} else {
+			// Right, diagonal
+			if (r > 0 && r < 7 && c < 7 && team != b.getPiece(r - c1, c + 1).getTeam()
+					&& b.getPiece(r - c1, c + 1).getName() != null) {
+				r = r - c1;
+				c = c + 1;
+				m = Integer.toString(r) + Integer.toString(c);// Move
+				if (team != b.getPiece(r, c).getTeam() && b.getPiece(r, c).getName() != null)
+					m = m + " This move kills the " + b.getPiece(r, c).getName() + " of the opponent";
+				String by = Integer.toString(row) + Integer.toString(column);
+				addToInterceptions(by, r, c, b);// interceptions
+				b.getPiece(row, column).moves[i] = m;
+				i++;
+
+			}
+
+			r = row;
+			c = column;
+			// left, diagonal
+			if (r > 0 && r < 7 && c > 0 && team != b.getPiece(r - c1, c - 1).getTeam()
+					&& b.getPiece(r - c1, c - 1).getName() != null) {
+				r = r - c1;
+				c--;
+				m = Integer.toString(r) + Integer.toString(c);// Move
+				if (team != b.getPiece(r, c).getTeam() && b.getPiece(r, c).getName() != null)
+					m = m + " This move kills the " + b.getPiece(r, c).getName() + " of the opponent";
+				String by = Integer.toString(row) + Integer.toString(column);
+				addToInterceptions(by, r, c, b);// interceptions
+				b.getPiece(row, column).moves[i] = m;
+				i++;
+
+			}
+
+			r = row;
+			c = column;
+			// up
+			if (r > 0 && r < 7 && b.getPiece(r - c1, c).getName() == null) {
+				r = r - c1;
+				m = Integer.toString(r) + Integer.toString(c);// Move
+				String by = Integer.toString(row) + Integer.toString(column);
+				addToInterceptions(by, r, c, b);// interceptions
+				b.getPiece(row, column).moves[i] = m;
+				i++;
+			}
+
+			r = row;
+			c = column;
+			// Up two
+			if (moved) {
+				if (r > 0 && b.getPiece(r - c2, c).getName() == null) {
+					r = r - c2;
+					m = Integer.toString(r) + Integer.toString(c);// Move
+					String by = Integer.toString(row) + Integer.toString(column);
+					addToInterceptions(by, r, c, b);// interceptions
+					b.getPiece(row, column).moves[i] = m;
+					i++;
+				}
+			}
+		}
 	}
 
-	@Override
-	public ArrayList<String> moves() {
-		ArrayList<String> returnVal = new ArrayList<String>();
-		int startX = this.getX();
-		int startY = this.getY();
-		boolean team = this.getTeam();
-		if (team && firstMove) {
-			returnVal.add((startY - 2) + "," + startX);
-			firstMove = false;
-		}
-		if (team)
-			returnVal.add((startY - 1) + "," + startX);
+	// THis function promotes the pawn
+	public void promotion() {
 
-		if (!team && firstMove) {
-			firstMove = false;			
-			int newY = startY + 2;
-			returnVal.add(newY + "," + startX);
-		}
-		if (!team) {
-			int otherNewY = startY + 1;
-			returnVal.add(otherNewY + "," + startX);
-		}
-		adjust(returnVal);
-		return returnVal;
-	}
-	private void adjust(ArrayList<String> rawMoves)
-	{
-		boolean team = this.getTeam();
-		if(team)
-		{
-			Piece p = GameHandler.b.getPiece(this.getY()-1, this.getX());
-			if(!p.isBlank())
-				rawMoves.removeAll(rawMoves);
-		}
-		else if(!team)
-		{
-			Piece p = GameHandler.b.getPiece(this.getY()+1, this.getX());
-			if(!p.isBlank())
-				rawMoves.removeAll(rawMoves);
-		}
-		if(team)
-		{
-			int x1 = this.getX() - 1;
-			int y1 = this.getY() - 1;
-			Piece cap1 = GameHandler.b.getPiece(y1, x1);
-			if(cap1 != null && !cap1.isBlank()) rawMoves.add(y1 + "," + x1);
-			int x2 = this.getX() + 1;
-			Piece cap2 = GameHandler.b.getPiece(y1, x2);
-			if(!cap2.isBlank() && cap2 != null) rawMoves.add(y1 + "," + x2);
-		}
-		if(!team)
-		{
-			int x1 = this.getX() - 1;
-			int y1 = this.getY() + 1;
-			Piece cap1 = GameHandler.b.getPiece(y1, x1);
-			if(cap1 != null && !cap1.isBlank()) rawMoves.add(y1 + "," + x1);
-			int x2 = this.getX() + 1;
-			Piece cap2 = GameHandler.b.getPiece(y1, x2);
-			if(!cap2.isBlank() && cap2 != null) rawMoves.add(y1 + "," + x2);
-		}
 	}
 }
