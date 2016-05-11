@@ -1,5 +1,3 @@
-
-
 public class Queen extends Piece {
 
 	private int limit;

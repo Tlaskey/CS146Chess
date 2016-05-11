@@ -1,5 +1,3 @@
-
-
 public class Piece {
 	protected boolean team;
 	protected String name;
