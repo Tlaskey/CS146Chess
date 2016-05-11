@@ -1,4 +1,3 @@
-//Bishop
 public class Camel extends Piece {
 
 	private int limit;

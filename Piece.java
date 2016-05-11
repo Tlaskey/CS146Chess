@@ -1,3 +1,5 @@
+
+
 public class Piece {
 	protected boolean team;
 	protected String name;
@@ -104,6 +106,18 @@ public class Piece {
 		}
 	}
 
+	// Add to interceptions
+	// This checks an empty spot to put in the 'being intercepted "by"'
+	// string in the interceptions array
+	protected void addToInterceptions(String by, int ro, int col, Board b) {
+		for (int i = 0; i < b.getPiece(ro, col).interceptions.length; i++) {
+			if (b.getPiece(ro, col).interceptions[i] == null) {
+				b.getPiece(ro, col).interceptions[i] = by;
+				break;
+			}
+		}
+	}
+
 	// Delete previous intersections
 	public void toDeleteIntersect() {
 		// Since the place of the piece is updated
@@ -128,23 +142,11 @@ public class Piece {
 
 	}
 
-	// Add to interceptions
-	// This checks an empty spot to put in the 'being intercepted "by"'
-	// string in the interceptions array
-	protected void addToInterceptions(String by, int r, int c, Board b) {
-		for (int i = 0; i < b.getPiece(r, c).interceptions.length; i++) {
-			if (b.getPiece(r, c).interceptions[i] == null) {
-				b.getPiece(r, c).interceptions[i] = by;
-				break;
-			}
-		}
-	}
-
-	// Check if the interceptions have an interception
-	// of the opposing team
+	//Of this piece, check all the intercetions 
+	//And return the ones that are opposite to the boolean t value
 	public String[] checkIntercept(Board b, boolean t) {
-		// Catch all the opposting team intercept in an array
-		String[] catchP = new String[9];
+		int otherTeam = 9;
+		String[] catchP = new String[otherTeam];//Because only 9 pieces from each side can attack a piece
 		int m = 0;
 		// intialize the catch array
 		for (int i = 0; i < 9; i++)
@@ -155,14 +157,14 @@ public class Piece {
 				int r = Character.getNumericValue(interceptions[i].charAt(0));
 				int c = Character.getNumericValue(interceptions[i].charAt(1));
 
-				if (b.getPiece(r, c).getTeam() != t) {
-					System.out.println("The piece at " + b.getPiece(r, c).getName());
+				if (b.getPiece(r, c).getTeam() != t && m < otherTeam) {
+					System.out.println(row + "," + column + " is being attacked by the piece at"
+							+ r + "," + c);
 					catchP[m] = interceptions[i];
 					m++;
 				}
 			}
 		}
-
 		return catchP;
 	}
 

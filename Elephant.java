@@ -1,4 +1,3 @@
-//Rook
 public class Elephant extends Piece {
 
 	private int limit;

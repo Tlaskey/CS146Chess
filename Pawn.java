@@ -1,3 +1,5 @@
+
+
 public class Pawn extends Piece {
 	private int limit;
 
@@ -40,7 +42,7 @@ public class Pawn extends Piece {
 				if (team != b.getPiece(r, c).getTeam() && b.getPiece(r, c).getName() != null)
 					m = m + " This move kills the " + b.getPiece(r, c).getName() + " of the opponent";
 				String by = Integer.toString(row) + Integer.toString(column);
-				addToInterceptions(by, r, c, b);// interceptions
+				addToInterceptions(by, r - c1, c + 1, b);// interceptions
 				b.getPiece(row, column).moves[i] = m;
 				i++;
 
@@ -57,7 +59,7 @@ public class Pawn extends Piece {
 				if (team != b.getPiece(r, c).getTeam() && b.getPiece(r, c).getName() != null)
 					m = m + " This move kills the " + b.getPiece(r, c).getName() + " of the opponent";
 				String by = Integer.toString(row) + Integer.toString(column);
-				addToInterceptions(by, r, c, b);// interceptions
+				addToInterceptions(by, r - c1, c - 1, b);// interceptions
 				b.getPiece(row, column).moves[i] = m;
 				i++;
 
@@ -69,8 +71,6 @@ public class Pawn extends Piece {
 			if (r > 0 && r < 7 && b.getPiece(r - c1, c).getName() == null) {
 				r = r - c1;
 				m = Integer.toString(r) + Integer.toString(c);// Move
-				String by = Integer.toString(row) + Integer.toString(column);
-				addToInterceptions(by, r, c, b);// interceptions
 				b.getPiece(row, column).moves[i] = m;
 				i++;
 			}
@@ -82,8 +82,6 @@ public class Pawn extends Piece {
 				if (r > 0 && b.getPiece(r - c2, c).getName() == null) {
 					r = r - c2;
 					m = Integer.toString(r) + Integer.toString(c);// Move
-					String by = Integer.toString(row) + Integer.toString(column);
-					addToInterceptions(by, r, c, b);// interceptions
 					b.getPiece(row, column).moves[i] = m;
 					i++;
 				}

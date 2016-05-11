@@ -38,8 +38,8 @@ public class Board {
 	}
 
 	// Getters
-	public Piece getPiece(int x, int y) {
-		return board[x][y];
+	public Piece getPiece(int r, int c) {
+		return board[r][c];
 	}
 
 	// Show the board
@@ -65,7 +65,7 @@ public class Board {
 		int oldCol = p.getColumn();
 		// Change the position of the piece
 		p.toDeleteIntersect();
-		System.out.println("Making move " + row + ", " + col);
+		System.out.println("Making move" + row + ", " + col);
 		if (p.getTeam() != b.getPiece(row, col).getTeam() && b.getPiece(row, col).getName() != null)
 			System.out.println("You have taken a " + b.getPiece(row, col).getName() + " of the other team.");
 		board[row][col] = p;

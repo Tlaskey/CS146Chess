@@ -16,7 +16,7 @@ public class King extends Piece {
 		int i = 0;
 
 		// Up 1, left 1
-		if (r >= 1 && c >= 1 && b.getPiece(r - 1, c - 1).getName() == null) {
+		if (r - 1 >= 0 && c - 1 >= 0 && b.getPiece(r - 1, c - 1).getName() == null) {
 			String[] catchP = b.getPiece(r - 1, c - 1).checkIntercept(b, team);
 
 			if (catchP[0] == null) {
@@ -24,10 +24,10 @@ public class King extends Piece {
 				moves[i] = m;
 				i++;
 				String by = Integer.toString(row) + Integer.toString(column);
-				addToInterceptions(by, r - 1, c + 1, b);// interceptions
+				addToInterceptions(by, r - 1, c - 1, b);// interceptions
 			}
 		}
-		if (r >= 1 && c >= 1 && b.getPiece(r - 1, c - 1).getName() != null
+		if (r - 1 >= 0 && c - 1 >= 0 && b.getPiece(r - 1, c - 1).getName() != null
 				&& team != b.getPiece(r - 1, c - 1).getTeam()) {
 			String[] catchP = b.getPiece(r - 1, c - 1).checkIntercept(b, team);
 
@@ -37,7 +37,7 @@ public class King extends Piece {
 				moves[i] = m;
 				i++;
 				String by = Integer.toString(row) + Integer.toString(column);
-				addToInterceptions(by, r - 1, c + 1, b);// interceptions
+				addToInterceptions(by, r - 1, c - 1, b);// interceptions
 			}
 		}
 
@@ -124,6 +124,7 @@ public class King extends Piece {
 			String[] catchP = b.getPiece(r + 1, c).checkIntercept(b, team);
 
 			if (catchP[0] == null) {
+				System.out.println("King's down method" + r+1 + "," + c);
 				m = Integer.toString(r + 1) + Integer.toString(c);
 				moves[i] = m;
 				i++;
@@ -146,28 +147,28 @@ public class King extends Piece {
 		}
 
 		// left 1
-		if (c + 1 <= 0 && b.getPiece(r, c + 1).getName() == null) {
-			String[] catchP = b.getPiece(r, c + 1).checkIntercept(b, team);
+		if (c - 1 >= 0 && b.getPiece(r, c - 1).getName() == null) {
+			String[] catchP = b.getPiece(r, c - 1).checkIntercept(b, team);
 
 			if (catchP[0] == null) {
-				m = Integer.toString(r) + Integer.toString(c + 1);
+				m = Integer.toString(r) + Integer.toString(c - 1);
 				moves[i] = m;
 				i++;
 				String by = Integer.toString(row) + Integer.toString(column);
-				addToInterceptions(by, r, c + 1, b);// interceptions
+				addToInterceptions(by, r, c - 1, b);// interceptions
 			}
 		}
-		if (c + 1 <= 0 && team != b.getPiece(r, c + 1).getTeam() && b.getPiece(r, c + 1).getName() != null) {
-			String[] catchP = b.getPiece(r, c + 1).checkIntercept(b, team);
+		if (c - 1 >= 0 && team != b.getPiece(r, c - 1).getTeam() && b.getPiece(r, c - 1).getName() != null) {
+			String[] catchP = b.getPiece(r, c - 1).checkIntercept(b, team);
 
 			if (catchP[0] == null) {
 				m = Integer.toString(r) + Integer.toString(c + 1);
-				if (team != b.getPiece(r, c + 1).getTeam())
-					m = m + " This move kills the " + b.getPiece(r, c + 1).getName() + " of the opponent";
+				if (team != b.getPiece(r, c - 1).getTeam())
+					m = m + " This move kills the " + b.getPiece(r, c - 1).getName() + " of the opponent";
 				moves[i] = m;
 				i++;
 				String by = Integer.toString(row) + Integer.toString(column);
-				addToInterceptions(by, r, c + 1, b);// interceptions
+				addToInterceptions(by, r, c - 1, b);// interceptions
 			}
 		}
 
