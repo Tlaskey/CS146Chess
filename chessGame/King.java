@@ -1,3 +1,4 @@
+package chessGame;
 public class King extends Piece {
 
 	private int limit;

@@ -1,3 +1,4 @@
+package chessGame;
 import java.util.Scanner;
 
 public class Chess {

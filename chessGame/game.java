@@ -1,3 +1,4 @@
+package chessGame;
 import java.util.Scanner;
 
 public class game {
@@ -36,7 +37,7 @@ public class game {
 			row = Character.getNumericValue(place.charAt(0));
 			col = Character.getNumericValue(place.charAt(1));
 			// Make the move
-			b.makeMove(row, col, b, p);
+			b.makeMove(row, col, p);
 			// Show the board
 			b.showBoard();
 			run++;

@@ -1,3 +1,5 @@
+package chessGame;
+
 public class Piece {
 	protected boolean team;
 	protected String name;
@@ -30,6 +32,19 @@ public class Piece {
 		direction = d;
 		empty = e;
 	}
+	public Piece(Piece p, Board b){
+		this.team = p.team;
+		this.name = p.name;
+		this.moved = p.moved;
+		this.row = p.row;
+		this.column= p.column;
+		this.direction = p.direction;
+		this.empty = p.empty;
+		this.interceptions = p.interceptions;
+		this.moves = new String[30];
+		this.moves(b);	
+		
+	}
 
 	// Another constructor for the blank
 	public Piece() {
@@ -40,6 +55,10 @@ public class Piece {
 	// Setting the move count
 	public void setMoveCount(int m) {
 		moves = new String[m];
+	}
+	public Piece setName(String str){
+		this.name = str;
+		return this;
 	}
 
 	public void setOneMove(int i, String e) {
@@ -104,18 +123,6 @@ public class Piece {
 		}
 	}
 
-	// Add to interceptions
-	// This checks an empty spot to put in the 'being intercepted "by"'
-	// string in the interceptions array
-	protected void addToInterceptions(String by, int ro, int col, Board b) {
-		for (int i = 0; i < b.getPiece(ro, col).interceptions.length; i++) {
-			if (b.getPiece(ro, col).interceptions[i] == null) {
-				b.getPiece(ro, col).interceptions[i] = by;
-				break;
-			}
-		}
-	}
-
 	// Delete previous intersections
 	public void toDeleteIntersect() {
 		// Since the place of the piece is updated
@@ -140,11 +147,23 @@ public class Piece {
 
 	}
 
-	//Of this piece, check all the intercetions 
-	//And return the ones that are opposite to the boolean t value
+	// Add to interceptions
+	// This checks an empty spot to put in the 'being intercepted "by"'
+	// string in the interceptions array
+	protected void addToInterceptions(String by, int r, int c, Board b) {
+		for (int i = 0; i < b.getPiece(r, c).interceptions.length; i++) {
+			if (b.getPiece(r, c).interceptions[i] == null) {
+				b.getPiece(r, c).interceptions[i] = by;
+				break;
+			}
+		}
+	}
+
+	// Check if the interceptions have an interception
+	// of the opposing team
 	public String[] checkIntercept(Board b, boolean t) {
-		int otherTeam = 9;
-		String[] catchP = new String[otherTeam];//Because only 9 pieces from each side can attack a piece
+		// Catch all the opposting team intercept in an array
+		String[] catchP = new String[9];
 		int m = 0;
 		// intialize the catch array
 		for (int i = 0; i < 9; i++)
@@ -155,14 +174,14 @@ public class Piece {
 				int r = Character.getNumericValue(interceptions[i].charAt(0));
 				int c = Character.getNumericValue(interceptions[i].charAt(1));
 
-				if (b.getPiece(r, c).getTeam() != t && m < otherTeam) {
-					System.out.println(row + "," + column + " is being attacked by the piece at"
-							+ r + "," + c);
+				if (b.getPiece(r, c).getTeam() != t) {
+					System.out.println("The piece at " + b.getPiece(r, c).getName());
 					catchP[m] = interceptions[i];
 					m++;
 				}
 			}
 		}
+
 		return catchP;
 	}
 

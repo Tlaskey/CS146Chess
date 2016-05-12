@@ -1,3 +1,5 @@
+package chessGame;
+
 public class Queen extends Piece {
 
 	private int limit;
@@ -6,6 +8,10 @@ public class Queen extends Piece {
 		super(t, n, m, x, y, d, e);
 		limit = 13 + 15;// Diagonal plus straight lines
 		
+	}
+	public Queen(Piece p, Board b){
+		super(p, b);
+		limit = 13 + 15;
 	}
 
 	// move

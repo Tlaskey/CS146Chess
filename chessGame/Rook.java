@@ -1,11 +1,17 @@
-public class Elephant extends Piece {
+package chessGame;
+
+public class Rook extends Piece {
 
 	private int limit;
 
-	public Elephant(boolean t, String n, boolean m, int x, int y, boolean d, boolean e) {
+	public Rook(boolean t, String n, boolean m, int x, int y, boolean d, boolean e) {
 		super(t, n, m, x, y, d, e);
 		limit = 15;
 
+	}
+	public Rook(Piece p, Board b){
+		super(p, b);
+		limit = 15;
 	}
 
 	// move
