@@ -17,6 +17,8 @@ import javax.imageio.ImageIO;
 
 public class ChessGUI {
 
+	private Board board;
+	JFrame f = new JFrame("ChessChamp");
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] chessBoardSquares = new JButton[8][8];
     private Image[][] chessPieceImages = new Image[2][6];
@@ -31,7 +33,22 @@ public class ChessGUI {
     };
     public static final int BLACK = 0, WHITE = 1;
 
-    ChessGUI() {
+    ChessGUI(Board B)
+    {
+    	board = B;
+    	f.add(cg.getGui());
+        // Ensures JVM closes after frame(s) closed and
+        // all non-daemon threads are finished
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // See http://stackoverflow.com/a/7143398/418556 for demo.
+        f.setLocationByPlatform(true);
+
+        // ensures the frame is the minimum size it needs to be
+        // in order display the components within it
+        f.pack();
+        // ensures the minimum size is enforced.
+        f.setMinimumSize(f.getSize());
+        f.setVisible(true);
         initializeGui();
     }
 
@@ -202,20 +219,7 @@ public class ChessGUI {
             public void run() {
                 ChessGUI cg = new ChessGUI();
 
-                JFrame f = new JFrame("ChessChamp");
-                f.add(cg.getGui());
-                // Ensures JVM closes after frame(s) closed and
-                // all non-daemon threads are finished
-                f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                // See http://stackoverflow.com/a/7143398/418556 for demo.
-                f.setLocationByPlatform(true);
-
-                // ensures the frame is the minimum size it needs to be
-                // in order display the components within it
-                f.pack();
-                // ensures the minimum size is enforced.
-                f.setMinimumSize(f.getSize());
-                f.setVisible(true);
+                
             }
         };
         // Swing GUIs should be created and updated on the EDT

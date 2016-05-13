@@ -1,4 +1,5 @@
 package chessGame;
+
 public class Blank extends Piece{
 	
 	//Try to make this the actual constructor

@@ -11,7 +11,7 @@ public class Piece {
 	protected String[] moves;
 
 	public Piece(boolean t, String n, boolean no, int x, int y, boolean d, boolean e) {
-		int total = 18;
+		int total = 32;
 		interceptions = new String[total];
 		moves = new String[30];
 
@@ -32,23 +32,15 @@ public class Piece {
 		direction = d;
 		empty = e;
 	}
-	public Piece(Piece p, Board b){
-		this.team = p.team;
-		this.name = p.name;
-		this.moved = p.moved;
-		this.row = p.row;
-		this.column= p.column;
-		this.direction = p.direction;
-		this.empty = p.empty;
-		this.interceptions = p.interceptions;
-		this.moves = new String[30];
-		this.moves(b);	
-		
-	}
 
 	// Another constructor for the blank
 	public Piece() {
 
+	}
+
+	// Get interceptions
+	public String[] getInterceptions() {
+		return interceptions;
 	}
 
 	// Setters
@@ -56,18 +48,30 @@ public class Piece {
 	public void setMoveCount(int m) {
 		moves = new String[m];
 	}
-	public Piece setName(String str){
-		this.name = str;
-		return this;
-	}
 
 	public void setOneMove(int i, String e) {
 		moves[i] = e;
 	}
 
+	public void setIfEmpty(boolean e) {
+		empty = e;
+	}
+
 	public void setRowColumn(int r, int c) {
 		row = r;
 		column = c;
+	}
+
+	public void setDirection(boolean d) {
+		direction = d;
+	}
+
+	public void setName(String n) {
+		name = n;
+	}
+
+	public void setTeam(boolean t) {
+		team = t;
 	}
 
 	public void hasMoved() {
@@ -123,47 +127,26 @@ public class Piece {
 		}
 	}
 
-	// Delete previous intersections
-	public void toDeleteIntersect() {
-		// Since the place of the piece is updated
-		// therefore the moveset has to be updated as well, and
-		// thus also the intersections' array
-		for (int i = 0; i < moves.length; i++) {
-			// First Delete the array
-			String m = moves[i];
-			deleteFromIntersect(row, column, m);
-		}
-
-	}
-
-	// Update the interception after making the move
-	public void deleteFromIntersect(int row, int col, String del) {
-		int m = 0;
-		while (m < interceptions.length) {
-			if (interceptions[m] == del)
-				interceptions[m] = null;
-			m++;
-		}
-
-	}
-
 	// Add to interceptions
 	// This checks an empty spot to put in the 'being intercepted "by"'
 	// string in the interceptions array
-	protected void addToInterceptions(String by, int r, int c, Board b) {
-		for (int i = 0; i < b.getPiece(r, c).interceptions.length; i++) {
-			if (b.getPiece(r, c).interceptions[i] == null) {
-				b.getPiece(r, c).interceptions[i] = by;
+	protected void addToInterceptions(String by, int ro, int col, Board b) {
+		for (int i = 0; i < b.getPiece(ro, col).interceptions.length; i++) {
+			if (b.getPiece(ro, col).interceptions[i] == null) {
+				// System.out.println("Adding to the interception of "+ ro + ""
+				// + col);
+				b.getPiece(ro, col).interceptions[i] = by;
 				break;
 			}
 		}
 	}
 
-	// Check if the interceptions have an interception
-	// of the opposing team
+	// Of this piece, check all the intercetions
+	// And return the ones that are opposite to the boolean t value
 	public String[] checkIntercept(Board b, boolean t) {
-		// Catch all the opposting team intercept in an array
-		String[] catchP = new String[9];
+		int otherTeam = 9;
+		String[] catchP = new String[otherTeam];// Because only 9 pieces from
+												// each side can attack a piece
 		int m = 0;
 		// intialize the catch array
 		for (int i = 0; i < 9; i++)
@@ -174,20 +157,31 @@ public class Piece {
 				int r = Character.getNumericValue(interceptions[i].charAt(0));
 				int c = Character.getNumericValue(interceptions[i].charAt(1));
 
-				if (b.getPiece(r, c).getTeam() != t) {
-					System.out.println("The piece at " + b.getPiece(r, c).getName());
+				if (b.getPiece(r, c).getTeam() != t && m < otherTeam) {
+					// System.out.println(row + "," + column + " is being
+					// attacked by the piece at" + r + "," + c);
 					catchP[m] = interceptions[i];
 					m++;
 				}
 			}
 		}
-
 		return catchP;
 	}
 
-	// Clear all the old moves
-	public void clearMoves() {
-		for (int i = 0; i < moves.length; i++)
-			moves[i] = null;
+	// Clear an interception's array for a piece
+	public void clearInter() {
+		for (int i = 0; i < interceptions.length; i++) {
+			interceptions[i] = null;
+		}
 	}
+
+	// Clear an moves' array for a piece
+	public void clearMoves() {
+		for (int i = 0; i < moves.length; i++) {
+			moves[i] = null;
+		}
+	}
+	
+	//public the interceptions of a specific piece
+	
 }

@@ -8,10 +8,6 @@ public class Bishop extends Piece {
 		super(t, n, m, x, y, d, e);
 		limit = 13;
 	}
-	public Bishop(Piece p, Board b){
-		super(p, b);
-		limit = 13;
-	}
 
 	// Pawn's move
 	public void moves(Board b) {
@@ -34,15 +30,17 @@ public class Bishop extends Piece {
 			moves[i] = m;
 			i++;
 		}
-		if (r > 0 && c < 7 && b.getPiece(r-1, c + 1).getName() != null && team != b.getPiece(r-1, c + 1).getTeam()) {
+		if (r > 0 && c < 7 && b.getPiece(r-1, c + 1).getName() != null) {
 			c++;
 			r--;
 			m = Integer.toString(r) + Integer.toString(c) + " This move kills the " + b.getPiece(r, c).getName()
 					+ " of the opponent";
 			String by = Integer.toString(row) + Integer.toString(column);
 			addToInterceptions(by, r, c, b);// interceptions
-			moves[i] = m;
-			i++;
+			if (team != b.getPiece(r, c).getTeam()) {
+				moves[i] = m;
+				i++;
+			}
 		}
 
 		r = row;
@@ -57,15 +55,17 @@ public class Bishop extends Piece {
 			moves[i] = m;
 			i++;
 		}
-		if (r>0 && c > 0 && b.getPiece(r-1, c - 1).getName() != null && team != b.getPiece(r-1, c - 1).getTeam()) {
+		if (r>0 && c > 0 && b.getPiece(r-1, c - 1).getName() != null) {
 			c--;
 			r--;
 			m = Integer.toString(r) + Integer.toString(c) + " This move kills the " + b.getPiece(r, c).getName()
 					+ " of the opponent";
 			String by = Integer.toString(row) + Integer.toString(column);
 			addToInterceptions(by, r, c, b);// interceptions
-			moves[i] = m;
-			i++;
+			if (team != b.getPiece(r, c).getTeam()) {
+				moves[i] = m;
+				i++;
+			}
 		}
 
 		r = row;
@@ -80,7 +80,7 @@ public class Bishop extends Piece {
 			moves[i] = m;
 			i++;
 		}
-		if (r < 7 && c > 0 && b.getPiece(r + 1, c-1).getName() != null && team != b.getPiece(r + 1, c-1).getTeam()) {
+		if (r < 7 && c > 0 && b.getPiece(r + 1, c-1).getName() != null) {
 			r++;
 			c--;
 			m = Integer.toString(r) + Integer.toString(c);// Move
@@ -88,8 +88,10 @@ public class Bishop extends Piece {
 					+ " of the opponent";
 			String by = Integer.toString(row) + Integer.toString(column);
 			addToInterceptions(by, r, c, b);// interceptions
-			moves[i] = m;
-			i++;
+			if (team != b.getPiece(r, c).getTeam()) {
+				moves[i] = m;
+				i++;
+			}
 		}
 
 		r = row;
@@ -105,7 +107,7 @@ public class Bishop extends Piece {
 			moves[i] = m;
 			i++;
 		}
-		if (r < 7 && c < 7 && b.getPiece(r + 1, c+1).getName() != null && team != b.getPiece(r + 1, c+1).getTeam()) {
+		if (r < 7 && c < 7 && b.getPiece(r + 1, c+1).getName() != null) {
 			r++;
 			c++;
 			m = Integer.toString(r) + Integer.toString(c);// Move
@@ -113,8 +115,10 @@ public class Bishop extends Piece {
 					+ " of the opponent";
 			String by = Integer.toString(row) + Integer.toString(column);
 			addToInterceptions(by, r, c, b);// interceptions
-			moves[i] = m;
-			i++;
+			if (team != b.getPiece(r, c).getTeam()) {
+				moves[i] = m;
+				i++;
+			}
 		}
 	}
 }

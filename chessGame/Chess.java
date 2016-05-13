@@ -1,4 +1,5 @@
 package chessGame;
+
 import java.util.Scanner;
 
 public class Chess {
@@ -17,7 +18,7 @@ public class Chess {
 		else if(col == "b")
 			color = false;
 		
-		game g = new game(color);
+		Game g = new Game(color);
 		
 		g.runTheGame();
 		i.close();
