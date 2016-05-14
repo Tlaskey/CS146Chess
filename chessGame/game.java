@@ -28,7 +28,7 @@ public class Game {
 	// public run the game
 	public void runTheGame() {
 		b.showBoard();
-		ChessGUI c = new ChessGUI(b);
+//		ChessGUI c = new ChessGUI(b);
 		b.showBoardInter();
 		Piece p = null;
 		int row = 0, col = 0;
@@ -40,7 +40,7 @@ public class Game {
 
 			// Select a piece
 			do{
-				System.out.println("Plz pick a pease from ur team");
+				System.out.println("Please pick a piece from your team.");
 				p = selectPiece(b);
 			}while(p.getTeam() != pl);
 			
@@ -131,7 +131,14 @@ public class Game {
 		System.out.println("Please select a move from the gives set of moves.");
 		return false;
 	}
-
+	//Checks if this move will capture an enemy piece.
+	public boolean isAMoveCaptures(int r1, int c1){
+		Piece p = b.getPiece(r1, c1);
+		if(p.getName() != null){
+			return true;
+		}
+		return false;
+	}
 	public void checkInterceptions() {
 		int m = 0;
 		while (m < 10) {
@@ -158,7 +165,6 @@ public class Game {
 		//Lets start with random difficulty
 		//this way comp just pick pieces randomly
 		p = pickRandomPiece(b);
-		
 	}
 	
 	//random picking
@@ -176,19 +182,19 @@ public class Game {
 				{
 					movablePieces[ind] = Integer.toString(b.getPiece(i, m).getRow()) 
 							+ Integer.toString(b.getPiece(i, m).getColumn());
+					ind++;
 				}
 			}
 		}
 		//Select a random array
-		Random rand = new Random(2);
+		Random rand = new Random();
 		
-		String thisPiece = null;
-		int random= 0;
+		int random = 0;
 		int minimum = 0;
 		int maximum = 15;
 		do{
 			random = rand.nextInt(maximum - minimum + 1) + minimum;
-		}while(movablePieces[random]== null);
+		}while(movablePieces[random] == null);
 		
 		System.out.println("The computer is moving the piece at " + movablePieces[random]);
 		
@@ -200,8 +206,19 @@ public class Game {
 		moves = b.getPiece(r, c).getMove();
 		minimum = 0;
 		maximum = 29;
+		
+		for(String move: moves){
+			if(move != null){
+				r = Character.getNumericValue(move.charAt(0)); 
+				c = Character.getNumericValue(move.charAt(1)); 
+				if(isAMoveCaptures(r, c)){
+					b.makeMove(r, c, p);
+					return p;
+				}
+			}
+		}
+		
 		do{
-			//System.out.println("asdkjaskjhdb");
 			random = rand.nextInt(maximum - minimum + 1) + minimum;
 		}while(moves[random] == null);
 		

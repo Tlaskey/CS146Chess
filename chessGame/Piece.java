@@ -141,7 +141,7 @@ public class Piece {
 		}
 	}
 
-	// Of this piece, check all the intercetions
+	// Of this piece, check all the interceptions
 	// And return the ones that are opposite to the boolean t value
 	public String[] checkIntercept(Board b, boolean t) {
 		int otherTeam = 9;

@@ -81,9 +81,8 @@ public class Knight extends Piece {
 			String by = Integer.toString(row) + Integer.toString(column);
 			addToInterceptions(by, r - 1, c - 2, b);// interceptions
 		}
-		if (c - 2 >= 0 && r - 1 >= 0 && b.getPiece(r - 1, c - 2).getName() == null) {
-			m = Integer.toString(r - 1) + Integer.toString(c - 2)
-			+ " This move kills the " + b.getPiece(r - 1, c - 2).getName() + " of the opponent";
+		if (c - 2 >= 0 && r - 1 >= 0 && b.getPiece(r - 1, c - 2).getName() != null) {
+			m = Integer.toString(r - 1) + Integer.toString(c - 2);
 			if (team != b.getPiece(r-1, c-2).getTeam()) {
 				moves[i] = m;
 				i++;

@@ -18,7 +18,7 @@ public class Rook extends Piece {
 
 		int i = 0;
 
-		// RIght
+		// Right
 		while (c < 7 && (b.getPiece(r, c + 1).getName() == null)) {
 			c++;
 			m = Integer.toString(r) + Integer.toString(c);// Move

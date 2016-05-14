@@ -86,23 +86,23 @@ public class Board {
 		int oldCol = p.getColumn();
 
 		// Change the position of the piece
-		p.clearMoves();
-		p.clearInter();
+		
 
 		p.setRowColumn(row, col);
 		board[row][col] = p;
 
 		p.hasMoved();
-		p.moves(this);
+		
 
 		Blank Bishop = new Blank(oldRow, oldCol);
 		board[oldRow][oldCol] = Bishop;
-		
+		for(Piece[] parr : board)
+			for(Piece q : parr)
+				q.clearInter();
 		for (int r = 0; r < 8; r++)
 			for (int c = 0; c < 8; c++) {
 
-				if (board[r][c] != Bishop && r != row && c != col) {
-					board[r][c].clearInter();// Clear the old interception of a piece
+				if ((board[r][c] != Bishop)) {					
 					board[r][c].clearMoves();// Clear the old moves of a
 												// piece
 					board[r][c].moves(this);
