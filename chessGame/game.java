@@ -28,7 +28,7 @@ public class Game {
 	// public run the game
 	public void runTheGame() {
 		b.showBoard();
-//		ChessGUI c = new ChessGUI(b);
+		ChessGUI c = new ChessGUI(b);
 		b.showBoardInter();
 		Piece p = null;
 		int row = 0, col = 0;
@@ -131,6 +131,7 @@ public class Game {
 		System.out.println("Please select a move from the gives set of moves.");
 		return false;
 	}
+	
 	//Checks if this move will capture an enemy piece.
 	public boolean isAMoveCaptures(int r1, int c1){
 		Piece p = b.getPiece(r1, c1);
@@ -139,6 +140,7 @@ public class Game {
 		}
 		return false;
 	}
+	
 	public void checkInterceptions() {
 		int m = 0;
 		while (m < 10) {
@@ -165,6 +167,7 @@ public class Game {
 		//Lets start with random difficulty
 		//this way comp just pick pieces randomly
 		p = pickRandomPiece(b);
+		
 	}
 	
 	//random picking
@@ -189,7 +192,7 @@ public class Game {
 		//Select a random array
 		Random rand = new Random();
 		
-		int random = 0;
+		int random= 0;
 		int minimum = 0;
 		int maximum = 15;
 		do{
@@ -207,6 +210,7 @@ public class Game {
 		minimum = 0;
 		maximum = 29;
 		
+		//If the piece contains a move that captures an enemy piece, capture it.
 		for(String move: moves){
 			if(move != null){
 				r = Character.getNumericValue(move.charAt(0)); 

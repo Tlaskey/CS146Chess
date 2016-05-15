@@ -33,7 +33,7 @@ public class Board {
 		for (int i = 2; i < 6; i++) {
 			for (int m = 0; m < 8; m++) {
 				board[i][m] = new Blank(i,
-						m);/**** Change this to Bishop somehow ******/
+						m);
 			}
 		}
 
@@ -94,15 +94,15 @@ public class Board {
 		p.hasMoved();
 		
 
-		Blank Bishop = new Blank(oldRow, oldCol);
-		board[oldRow][oldCol] = Bishop;
+		Blank blank = new Blank(oldRow, oldCol);
+		board[oldRow][oldCol] = blank;
 		for(Piece[] parr : board)
 			for(Piece q : parr)
 				q.clearInter();
 		for (int r = 0; r < 8; r++)
 			for (int c = 0; c < 8; c++) {
 
-				if ((board[r][c] != Bishop)) {					
+				if ((board[r][c] != blank)) {					
 					board[r][c].clearMoves();// Clear the old moves of a
 												// piece
 					board[r][c].moves(this);
