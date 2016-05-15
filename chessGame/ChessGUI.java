@@ -181,59 +181,72 @@ public class ChessGUI {
 			for (int c = 0; c < 8; c++) {
 				// For kings
 				if (board.getPiece(r, c).getName() == "King" && board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[WHITE][KING]));
 				}
 				if (board.getPiece(r, c).getName() == "King" && !board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[BLACK][KING]));
 				}
 				// For queen
 				if (board.getPiece(r, c).getName() == "Queen" && board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[WHITE][QUEEN]));
 				}
 				if (board.getPiece(r, c).getName() == "Queen" && !board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[BLACK][QUEEN]));
 				}
 				// Rook
 				if (board.getPiece(r, c).getName() == "Rook" && board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[WHITE][ROOK]));
 				}
 				if (board.getPiece(r, c).getName() == "Rook" && !board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[BLACK][ROOK]));
 				}
 				// Bishop
 				if (board.getPiece(r, c).getName() == "Bishop" && board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[WHITE][BISHOP]));
 				}
 				if (board.getPiece(r, c).getName() == "Bishop" && !board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[BLACK][BISHOP]));
 				}
 				// Knight
 				if (board.getPiece(r, c).getName() == "Knight" && board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[WHITE][KNIGHT]));
 				}
 				if (board.getPiece(r, c).getName() == "Knight" && !board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[BLACK][KNIGHT]));
 				}
 				// Pawn
 				if (board.getPiece(r, c).getName() == "Pawn" && board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[WHITE][PAWN]));
 				}
 				if (board.getPiece(r, c).getName() == "Pawn" && !board.getPiece(r, c).getTeam()) {
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(new ImageIcon(chessPieceImages[BLACK][PAWN]));
 				}
 				if(board.getPiece(r, c).getName() == null){
+					if(chessBoardSquares[r][c].getActionListeners().length < 1)
 					chessBoardSquares[r][c].addActionListener(new pieceAction(r,c));
 					chessBoardSquares[r][c].setIcon(null);
 				}
@@ -271,7 +284,7 @@ public class ChessGUI {
 			String[] moves = board.getPiece(row, col).getMove();
 
 			int i = 0;
-
+			System.out.println("Count of listeners " + ((JButton) e.getSource()).getActionListeners().length);
 			while (i < moves.length) {
 				if (moves[i] != null) {
 					int r = Character.getNumericValue(moves[i].charAt(0));

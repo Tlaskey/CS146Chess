@@ -169,7 +169,6 @@ public class Game {
 		p = pickRandomPiece(b);
 		
 	}
-	
 	//random picking
 	public Piece pickRandomPiece(Board b){
 		Piece p = null;
